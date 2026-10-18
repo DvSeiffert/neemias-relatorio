@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Neemias · Edição</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --paper: #fffdf8;
+    --ink: #2a2520;
+    --muted: #8a7f70;
+    --line: #e7dfcf;
+    --accent: #9a7b4f;
+    --s-done: #7aa543;      --s-done-bg: #eef5e4;
+    --s-1010: #2f6f69;      --s-1010-bg: #e2efed;
+    --s-1410: #e07a2e;      --s-1410-bg: #fcebdc;
+    --s-loc:  #b02a1e;      --s-loc-bg:  #f8e1de;
+    --shadow: 0 1px 2px rgba(60,45,20,.05), 0 8px 30px rgba(60,45,20,.07);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17140f; --paper: #211d17; --ink: #efe7d8; --muted: #a39782; --line: #3a332a; --accent: #cfae7a;
+      --s-done: #9dcb63; --s-done-bg: #26301a;
+      --s-1010: #5fb3aa; --s-1010-bg: #17302d;
+      --s-1410: #f29a52; --s-1410-bg: #3a2414;
+      --s-loc:  #ec6b5e; --s-loc-bg:  #3a1a16;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17140f; --paper: #211d17; --ink: #efe7d8; --muted: #a39782; --line: #3a332a; --accent: #cfae7a;
+    --s-done: #9dcb63; --s-done-bg: #26301a;
+    --s-1010: #5fb3aa; --s-1010-bg: #17302d;
+    --s-1410: #f29a52; --s-1410-bg: #3a2414;
+    --s-loc:  #ec6b5e; --s-loc-bg:  #3a1a16;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 30px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.5 Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 48px 16px 64px; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .18em; font-size: 11px; color: var(--accent); font-weight: 600; }
+  h1 { font-family: "Cormorant Garamond", serif; font-weight: 600; font-size: 56px; line-height: 1; margin: 6px 0 4px; }
+  .sub { color: var(--muted); font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 19px; }
+  .theme-btn { background: var(--paper); border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 8px 14px; cursor: pointer; font: inherit; }
+
+  .progress-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; padding: 22px 24px; box-shadow: var(--shadow); margin-bottom: 20px; }
+  .progress-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px; gap: 12px; flex-wrap: wrap; }
+  .progress-top strong { font-family: "Cormorant Garamond", serif; font-size: 34px; font-weight: 700; }
+  .progress-top span { color: var(--muted); }
+  .bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--line); }
+  .bar div { transition: width .5s ease; }
+  .chapters-strip { display: grid; grid-template-columns: repeat(13, 1fr); gap: 6px; margin-top: 16px; }
+  .chip { aspect-ratio: 1; border-radius: 10px; display: grid; place-items: center; font-weight: 600; font-size: 13px; cursor: pointer; border: 1px solid transparent; transition: transform .15s; }
+  .chip:hover { transform: translateY(-2px); }
+
+  .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 20px; }
+  .stat { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; cursor: pointer; box-shadow: var(--shadow); position: relative; overflow: hidden; transition: border-color .2s; }
+  .stat::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--c); }
+  .stat.active { border-color: var(--c); }
+  .stat .n { font-family: "Cormorant Garamond", serif; font-size: 38px; font-weight: 700; color: var(--c); line-height: 1; }
+  .stat .l { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .stat .d { font-size: 11px; color: var(--c); font-weight: 600; margin-top: 2px; min-height: 16px; }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: center; }
+  .toolbar input { flex: 1; min-width: 180px; background: var(--paper); border: 1px solid var(--line); color: var(--ink); border-radius: 10px; padding: 10px 14px; font: inherit; }
+  .btn { background: var(--paper); border: 1px solid var(--line); color: var(--ink); border-radius: 10px; padding: 10px 14px; cursor: pointer; font: inherit; font-weight: 500; }
+  .btn:hover { border-color: var(--accent); }
+
+  .table-card { background: var(--paper); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 720px; }
+  th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); font-weight: 600; padding: 14px 16px; border-bottom: 1px solid var(--line); cursor: pointer; user-select: none; white-space: nowrap; }
+  th .arr { opacity: .5; margin-left: 4px; }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  tr:last-child td { border-bottom: 0; }
+  tbody tr { transition: background .15s; }
+  tbody tr:hover { background: color-mix(in srgb, var(--accent) 6%, transparent); }
+  tr.flash { animation: flash 1.2s ease; }
+  @keyframes flash { 0%,40% { background: color-mix(in srgb, var(--accent) 22%, transparent); } }
+  .cap { font-family: "Cormorant Garamond", serif; font-size: 24px; font-weight: 700; width: 70px; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--bg-c); color: var(--c); white-space: nowrap; }
+  .pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+  select, td input.note { background: transparent; border: 1px solid transparent; color: var(--ink); font: inherit; padding: 6px 8px; border-radius: 8px; width: 100%; }
+  select:hover, select:focus, td input.note:hover, td input.note:focus { border-color: var(--line); outline: none; background: var(--bg); }
+  select { cursor: pointer; }
+  .prazo { white-space: nowrap; }
+  .prazo small { display: block; font-size: 11px; color: var(--muted); }
+  .prazo small.late { color: var(--s-loc); font-weight: 600; }
+  .empty { padding: 40px; text-align: center; color: var(--muted); font-style: italic; }
+
+  footer { margin-top: 18px; color: var(--muted); font-size: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  @media (max-width: 720px) {
+    .wrap { padding-top: 28px; }
+    h1 { font-size: 42px; }
+    .stats { grid-template-columns: 1fr; }
+    .chapters-strip { grid-template-columns: repeat(7, 1fr); }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Relatório de edição</div>
+      <h1>Neemias</h1>
+      <div class="sub">Acompanhamento dos 13 capítulos</div>
+    </div>
+    <button class="theme-btn" id="themeBtn">◐ Tema</button>
+  </header>
+
+  <section class="progress-card">
+    <div class="progress-top">
+      <div><strong id="pct">0%</strong> <span>concluído</span></div>
+      <span id="pctDetail"></span>
+    </div>
+    <div class="bar" id="bar"></div>
+    <div class="chapters-strip" id="strip"></div>
+  </section>
+
+  <section class="stats" id="stats"></section>
+
+  <div class="toolbar">
+    <input id="search" type="search" placeholder="Buscar capítulo ou observação…">
+    <button class="btn" id="clearFilter">Mostrar todos</button>
+    <button class="btn" id="exportCsv">Exportar CSV</button>
+    <button class="btn" id="reset">Restaurar dados</button>
+  </div>
+
+  <div class="table-card">
+    <table>
+      <thead>
+        <tr>
+          <th data-sort="cap">Capítulo<span class="arr"></span></th>
+          <th data-sort="vers">Versículos<span class="arr"></span></th>
+          <th data-sort="status">Situação<span class="arr"></span></th>
+          <th data-sort="prazo">Prazo<span class="arr"></span></th>
+          <th>Alterar situação</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <span>Alterações ficam salvas neste navegador.</span>
+    <span id="updated"></span>
+  </footer>
+</div>
+
+<script>
+const YEAR = 2026;
+const STATUS = {
+  done: { label: "Editado",                 c: "--s-done", bg: "--s-done-bg", prazo: null,   order: 0 },
+  loc:  { label: "Falta receber locução",   c: "--s-loc",  bg: "--s-loc-bg",  prazo: null,   order: 3 },
+};
+const VERSES = [11,20,32,23,19,19,73,18,38,39,36,47,31];
+const INITIAL = {
+  1:["done",""], 2:["done",""], 4:["done",""], 7:["done",""], 11:["done",""],
+  5:["done",""], 6:["done",""], 8:["done",""], 9:["done",""], 13:["done",""],
+  3:["loc","Falta locução apenas dos vv. 29–32"],
+  10:["loc","Capítulo inteiro"],
+  12:["loc","Capítulo inteiro"],
+};
+const KEY = "neemias-edicao-v3";
+
+function fresh() {
+  return VERSES.map((v, i) => ({ cap: i + 1, vers: v, status: INITIAL[i+1][0], note: INITIAL[i+1][1] }));
+}
+let data;
+try { data = JSON.parse(localStorage.getItem(KEY)) || fresh(); } catch { data = fresh(); }
+let filter = null, query = "", sortKey = "cap", sortDir = 1;
+
+const $ = id => document.getElementById(id);
+const v = name => `var(${name})`;
+function save() { try { localStorage.setItem(KEY, JSON.stringify(data)); } catch {} }
+
+function daysUntil(ddmm) {
+  const [d, m] = ddmm.split("/").map(Number);
+  const today = new Date(); today.setHours(0,0,0,0);
+  return Math.round((new Date(YEAR, m - 1, d) - today) / 864e5);
+}
+function dueText(ddmm) {
+  const n = daysUntil(ddmm);
+  if (n < 0) return [`atrasado ${-n} dia${n === -1 ? "" : "s"}`, true];
+  if (n === 0) return ["vence hoje", true];
+  return [`em ${n} dia${n === 1 ? "" : "s"}`, false];
+}
+
+function render() {
+  const counts = Object.fromEntries(Object.keys(STATUS).map(k => [k, data.filter(r => r.status === k).length]));
+  const total = data.length;
+
+  // Progress (chapter 3 partial: count verses for a weighted view)
+  const doneVerses = data.filter(r => r.status === "done").reduce((s, r) => s + r.vers, 0);
+  const allVerses = VERSES.reduce((a, b) => a + b, 0);
+  $("pct").textContent = Math.round(counts.done / total * 100) + "%";
+  $("pctDetail").textContent = `${counts.done} de ${total} capítulos · ${doneVerses} de ${allVerses} versículos`;
+  $("bar").innerHTML = Object.entries(STATUS).map(([k, s]) =>
+    `<div title="${s.label}: ${counts[k]}" style="width:${counts[k]/total*100}%;background:${v(s.c)}"></div>`).join("");
+
+  $("strip").innerHTML = data.map(r => {
+    const s = STATUS[r.status];
+    return `<div class="chip" data-cap="${r.cap}" title="Cap. ${r.cap} — ${s.label}" style="background:${v(s.bg)};color:${v(s.c)};border-color:${v(s.c)}33">${r.cap}</div>`;
+  }).join("");
+
+  $("stats").innerHTML = Object.entries(STATUS).map(([k, s]) => {
+    let d = "";
+    if (s.prazo && counts[k]) d = dueText(s.prazo)[0];
+    const caps = data.filter(r => r.status === k).map(r => r.cap).join(", ");
+    return `<div class="stat ${filter === k ? "active" : ""}" data-k="${k}" style="--c:${v(s.c)}">
+      <div class="n">${counts[k]}</div><div class="l">${s.label}</div><div class="d">${d || (caps ? "Cap. " + caps : "")}</div></div>`;
+  }).join("");
+
+  let rows = data.filter(r => (!filter || r.status === filter) &&
+    (!query || `${r.cap} ${STATUS[r.status].label} ${r.note}`.toLowerCase().includes(query)));
+  rows.sort((a, b) => {
+    let x, y;
+    if (sortKey === "status") { x = STATUS[a.status].order; y = STATUS[b.status].order; }
+    else if (sortKey === "prazo") { x = STATUS[a.status].prazo ? daysUntil(STATUS[a.status].prazo) : 999; y = STATUS[b.status].prazo ? daysUntil(STATUS[b.status].prazo) : 999; }
+    else { x = a[sortKey]; y = b[sortKey]; }
+    return (x - y || a.cap - b.cap) * sortDir;
+  });
+
+  document.querySelectorAll("th[data-sort]").forEach(th =>
+    th.querySelector(".arr").textContent = th.dataset.sort === sortKey ? (sortDir > 0 ? "↑" : "↓") : "");
+
+  $("tbody").innerHTML = rows.length ? rows.map(r => {
+    const s = STATUS[r.status];
+    let prazo = "—";
+    if (s.prazo) { const [t, late] = dueText(s.prazo); prazo = `${s.prazo}<small class="${late ? "late" : ""}">${t}</small>`; }
+    return `<tr id="row-${r.cap}">
+      <td class="cap">${r.cap}</td>
+      <td>${r.vers}</td>
+      <td><span class="pill" style="--c:${v(s.c)};--bg-c:${v(s.bg)}">${s.label}</span></td>
+      <td class="prazo">${prazo}</td>
+      <td><select data-cap="${r.cap}">${Object.entries(STATUS).map(([k, o]) =>
+        `<option value="${k}" ${k === r.status ? "selected" : ""}>${o.label}</option>`).join("")}</select></td>
+      <td><input class="note" data-cap="${r.cap}" value="${r.note.replace(/"/g, "&quot;")}" placeholder="Adicionar nota…"></td>
+    </tr>`;
+  }).join("") : `<tr><td colspan="6" class="empty">Nenhum capítulo encontrado.</td></tr>`;
+
+  $("updated").textContent = "Atualizado em " + new Date().toLocaleDateString("pt-BR");
+}
+
+$("stats").addEventListener("click", e => {
+  const k = e.target.closest(".stat")?.dataset.k; if (!k) return;
+  filter = filter === k ? null : k; render();
+});
+$("strip").addEventListener("click", e => {
+  const cap = e.target.closest(".chip")?.dataset.cap; if (!cap) return;
+  filter = null; query = ""; $("search").value = ""; render();
+  const row = $("row-" + cap); row.scrollIntoView({ behavior: "smooth", block: "center" });
+  row.classList.add("flash"); setTimeout(() => row.classList.remove("flash"), 1200);
+});
+$("tbody").addEventListener("change", e => {
+  if (e.target.tagName !== "SELECT") return;
+  data.find(r => r.cap == e.target.dataset.cap).status = e.target.value; save(); render();
+});
+$("tbody").addEventListener("input", e => {
+  if (!e.target.classList.contains("note")) return;
+  data.find(r => r.cap == e.target.dataset.cap).note = e.target.value; save();
+});
+$("search").addEventListener("input", e => { query = e.target.value.trim().toLowerCase(); render(); });
+document.querySelectorAll("th[data-sort]").forEach(th => th.addEventListener("click", () => {
+  sortDir = sortKey === th.dataset.sort ? -sortDir : 1; sortKey = th.dataset.sort; render();
+}));
+$("clearFilter").onclick = () => { filter = null; query = ""; $("search").value = ""; render(); };
+$("reset").onclick = () => { if (confirm("Restaurar os dados originais do relatório?")) { data = fresh(); save(); render(); } };
+$("exportCsv").onclick = () => {
+  const csv = ["Capítulo;Versículos;Situação;Prazo;Observações",
+    ...data.map(r => [r.cap, r.vers, STATUS[r.status].label, STATUS[r.status].prazo || "", `"${r.note.replace(/"/g, '""')}"`].join(";"))].join("\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob(["﻿" + csv], { type: "text/csv;charset=utf-8" }));
+  a.download = "neemias-edicao.csv"; a.click();
+};
+$("themeBtn").onclick = () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+};
+
+render();
+</script>
+</body>
+</html>
